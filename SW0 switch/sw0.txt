@@ -1,0 +1,38 @@
+2.Configure SW1 (VLANs, Access Ports, and Trunk):Execute on SW1 CLI.Plaintextenable
+configure terminal
+hostname SW1
+
+! Create VLANs
+vlan 10
+  name MGMT
+vlan 20
+  name STAFF
+vlan 30
+  name SERVERS
+vlan 99
+  name NATIVE
+exit
+
+! Configure Access Ports
+interface FastEthernet0/1
+  switchport mode access
+  switchport access vlan 20
+  no shutdown
+
+interface FastEthernet0/2
+  switchport mode access
+  switchport access vlan 30
+  no shutdown
+
+! Configure 802.1Q Trunk to R1
+interface GigabitEthernet0/1
+  switchport mode trunk
+  switchport trunk native vlan 99
+  no shutdown
+
+! Switch SVI for Management
+interface vlan 10
+  ip address 10.10.10.2 255.255.255.0
+  no shutdown
+exit
+ip default-gateway 10.10.10.1
