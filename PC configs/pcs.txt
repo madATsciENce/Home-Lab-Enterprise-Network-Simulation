@@ -1,0 +1,24 @@
+4.Configure SW2 and R2 (Branch Site):Execute on SW2 and R2 CLIs.On SW2:Plaintextenable
+configure terminal
+hostname SW2
+
+interface range FastEthernet0/1 - 24
+  switchport mode access
+  no shutdown
+interface GigabitEthernet0/1
+  no shutdown
+On R2:Plaintextenable
+configure terminal
+hostname R2
+
+! LAN Interface (Default Gateway for PC3)
+interface GigabitEthernet0/0/0
+  ip address 10.20.10.1 255.255.255.0
+  no shutdown
+
+! WAN Interface to R1
+interface GigabitEthernet0/0/1
+  ip address 10.0.0.2 255.255.255.252
+  no shutdown
+exit
+5.Assign Static IP Addresses to PCs:Set via Desktop.IP Configuration tab on each PC">PC1 (HQ Staff):IP: 10.10.20.10 | Subnet: 255.255.255.0 | Gateway: 10.10.20.1PC2 (HQ Server):IP: 10.10.30.10 | Subnet: 255.255.255.0 | Gateway: 10.10.30.1PC3 (Branch Staff):IP: 10.20.10.10 | Subnet: 255.255.255.0 | Gateway: 10.20.10.1Checkpoint: From PC1 Command Prompt, ping 10.10.30.10 (PC2) to verify Inter-VLAN routing through R1.
