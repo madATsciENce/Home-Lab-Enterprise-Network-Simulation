@@ -1,0 +1,17 @@
+6.Enable OSPF Routing (Single Area 0):Advertise subnets across WAN.On R1:PlaintextR1(config)# router ospf 1
+R1(config-router)# router-id 1.1.1.1
+R1(config-router)# network 10.10.10.0 0.0.0.255 area 0
+R1(config-router)# network 10.10.20.0 0.0.0.255 area 0
+R1(config-router)# network 10.10.30.0 0.0.0.255 area 0
+R1(config-router)# network 10.0.0.0 0.0.0.3 area 0
+R1(config-router)# passive-interface GigabitEthernet0/0/0.10
+R1(config-router)# passive-interface GigabitEthernet0/0/0.20
+R1(config-router)# passive-interface GigabitEthernet0/0/0.30
+R1(config-router)# exit
+On R2:PlaintextR2(config)# router ospf 1
+R2(config-router)# router-id 2.2.2.2
+R2(config-router)# network 10.20.10.0 0.0.0.255 area 0
+R2(config-router)# network 10.0.0.0 0.0.0.3 area 0
+R2(config-router)# passive-interface GigabitEthernet0/0/0
+R2(config-router)# exit
+Verification: On R1/R2 run show ip route ospf and show ip ospf neighbor. Ping 10.20.10.10 (PC3) from PC1.
